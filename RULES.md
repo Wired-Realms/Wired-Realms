@@ -1,6 +1,6 @@
 # Commit Rules
-- Before commiting anything, always run `test.sh` for linter
-- Any new feature will have it's own branch
+- Before commiting anything, always run `make linter` for linter checks
+- Any new feature will have its own branch
 - Always pull changes from the upper branch before trying to merge commits
 - Commit message will look like: `[type]: Description`
 - Branches will be named: `type/name`
@@ -12,7 +12,7 @@
 - fix: Fixes a bug
 - docs: Creates or modifies a documentation
 - style: Changes that do not affect the logic of the program (eg: changing a color etc.)
-- refactor: Refactorises code, but does not change the logic of the program (eg: linter etc.)
+- refactor: Refactorings code, but does not change the logic of the program (eg: linter etc.)
 - test: Adds or modifies tests
 
 ### Example
