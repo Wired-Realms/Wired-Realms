@@ -10,60 +10,117 @@ echo "Checking for coding style issues in *.$FILE_EXTENSION files within $DIRECT
 echo ""
 
 # Flag to indicate if any issues were found
-found_trailing_whitespace=false
-found_paranthesys_issue=false
+#found_trailing_whitespace=false
+#found_paranthesys_issue=false
 found_issue=false
-found_if_for_paranthesys_issue=false
+#found_if_for_paranthesys_issue=false
+#found_no_space_parameters=false
 
-# Loop through each file and check for trailing whitespaces
+# Loop through each file and check for issues
 while IFS= read -r file; do
 
     # Check for trailing whitespaces in each file
     if grep -Hn "[[:blank:]]$" "$file"; then
-        found_trailing_whitespace=true
         found_issue=true
+        echo "Trailing whitespaces found! Please fix the issues above."
+
     fi
 
     # Check for missing space between method declaration and {
     if grep -Hn "(*){" "$file"; then
-	    found_paranthesys_issue=true
         found_issue=true
+        echo "No space between method declaration and {"
+
     fi
 
     # Check for missing space between if/for and (
     if grep -Hn "if(" "$file"; then
-        found_if_for_paranthesys_issue=true
         found_issue=true
+        echo "No space between if/for and ("
     fi
 
     if grep -Hn "for(" "$file"; then
-        found_if_for_paranthesys_issue=true
         found_issue=true
-    fi
-
-    # Print the issues found
-    if [ "$found_trailing_whitespace" = true ]; then
-        echo "Trailing whitespaces found! Please fix the issues above."
-    fi
-
-    if [ "$found_paranthesys_issue" = true ]; then
-        echo "No space between method declaration and {"
-    fi
-
-    if [ "$found_if_for_paranthesys_issue" = true ]; then
         echo "No space between if/for and ("
+    fi
+
+    # Check for missing space inside if/for parameters
+    if grep -Hn "if ([A-Za-z.0-9]*[><]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*==" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*!=" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*>=" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*<=" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*&&" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "if ([A-Za-z.0-9]*||" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "[<>][0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn ">=[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "<=[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "==[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "!=[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "&&[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn "||[0-9A-Za-z.]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
+    fi
+
+    if grep -Hn ";[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between if/for components"
     fi
 done < <(find "$DIRECTORY" -type f -name "*.$FILE_EXTENSION")
 
 if [ "$found_issue" = false ]; then
     echo "No coding style issues found. Great job!"
 fi
-
-# Print result based on whether issues were found
-#if [ "$found_trailing_whitespace" = true ]; then
-#    echo "Trailing whitespaces found! Please fix the issues above."
-#fi
-
-#if [ "$found_paranthesys_issue" = true ]; then
-#    echo "No space between method declaration and {"
-#fi
