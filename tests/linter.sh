@@ -2,7 +2,7 @@
 
 # Define the directory or files to check
 # Here we check all `.java` files in the `src` folder. Adjust as needed.
-DIRECTORY="../src"
+DIRECTORY="./src"
 FILE_EXTENSION="java"  # Change to check other types (e.g., "py" for Python files)
 
 # Find files with trailing whitespace and list them
