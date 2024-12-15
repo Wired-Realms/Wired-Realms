@@ -13,6 +13,7 @@ echo ""
 found_trailing_whitespace=false
 found_paranthesys_issue=false
 found_issue=false
+found_if_for_paranthesys_issue=false
 
 # Loop through each file and check for trailing whitespaces
 while IFS= read -r file; do
@@ -28,12 +29,29 @@ while IFS= read -r file; do
 	    found_paranthesys_issue=true
         found_issue=true
     fi
+
+    # Check for missing space between if/for and (
+    if grep -Hn "if(" "$file"; then
+        found_if_for_paranthesys_issue=true
+        found_issue=true
+    fi
+
+    if grep -Hn "for(" "$file"; then
+        found_if_for_paranthesys_issue=true
+        found_issue=true
+    fi
+
+    # Print the issues found
     if [ "$found_trailing_whitespace" = true ]; then
         echo "Trailing whitespaces found! Please fix the issues above."
     fi
 
     if [ "$found_paranthesys_issue" = true ]; then
         echo "No space between method declaration and {"
+    fi
+
+    if [ "$found_if_for_paranthesys_issue" = true ]; then
+        echo "No space between if/for and ("
     fi
 done < <(find "$DIRECTORY" -type f -name "*.$FILE_EXTENSION")
 
