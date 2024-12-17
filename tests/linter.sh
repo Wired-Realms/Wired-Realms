@@ -119,6 +119,77 @@ while IFS= read -r file; do
         found_issue=true
         echo "No space between if/for components"
     fi
+
+    if grep -Hn "[A-Za-z.0-9]=" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "=[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "[A-Za-z.0-9]+=" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "+=[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "\-=[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "[A-Za-z.0-9]\-=" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "\*=[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "[A-Za-z.0-9]\*=" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "/=[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "[A-Za-z.0-9]/=" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "=[A-Za-z.0-9]+" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "[A-Za-z.0-9]\-[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "\-[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
+    if grep -Hn "+[A-Za-z.0-9]" "$file"; then
+        found_issue=true
+        echo "No space between components"
+    fi
+
 done < <(find "$DIRECTORY" -type f -name "*.$FILE_EXTENSION")
 
 if [ "$found_issue" = false ]; then
