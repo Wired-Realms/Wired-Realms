@@ -27,6 +27,8 @@ public class GamePanel extends JPanel implements Runnable{
     int playerY = 100;
     int playerSpeed = 4;
 
+    double speedMagnitude = Math.sqrt(Math.pow(playerSpeed, 2) + Math.pow(playerSpeed, 2));
+
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -70,19 +72,29 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if (keyH.upPressed) {
+        if (keyH.upPressed && keyH.leftPressed) {
+
+            playerY -= (playerSpeed / Math.sqrt(2));
+            playerX -= (playerSpeed / Math.sqrt(2));
+        } else if (keyH.upPressed && keyH.rightPressed) {
+
+            playerY -= (playerSpeed / Math.sqrt(2));
+            playerX += (playerSpeed / Math.sqrt(2));
+        } else if (keyH.downPressed && keyH.leftPressed) {
+
+            playerY += (playerSpeed / Math.sqrt(2));
+            playerX -= (playerSpeed / Math.sqrt(2));
+        } else if (keyH.downPressed && keyH.rightPressed) {
+
+            playerY += (playerSpeed / Math.sqrt(2));
+            playerX += (playerSpeed / Math.sqrt(2));
+        } else if (keyH.upPressed) {
             playerY -= playerSpeed;
-        }
-
-        if (keyH.downPressed) {
+        } else if (keyH.downPressed) {
             playerY += playerSpeed;
-        }
-
-        if (keyH.leftPressed) {
+        } else if (keyH.leftPressed) {
             playerX -= playerSpeed;
-        }
-        
-        if (keyH.rightPressed) {
+        } else if (keyH.rightPressed) {
             playerX += playerSpeed;
         }
     }
