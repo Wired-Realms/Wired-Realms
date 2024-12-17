@@ -1,5 +1,7 @@
 package main;
 
+import Entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    Player player = new Player(this, keyH);
 
     // Set player's default position
     int playerX = 100;
@@ -71,32 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-
-        if (keyH.upPressed && keyH.leftPressed) {
-
-            playerY -= (playerSpeed / Math.sqrt(2));
-            playerX -= (playerSpeed / Math.sqrt(2));
-        } else if (keyH.upPressed && keyH.rightPressed) {
-
-            playerY -= (playerSpeed / Math.sqrt(2));
-            playerX += (playerSpeed / Math.sqrt(2));
-        } else if (keyH.downPressed && keyH.leftPressed) {
-
-            playerY += (playerSpeed / Math.sqrt(2));
-            playerX -= (playerSpeed / Math.sqrt(2));
-        } else if (keyH.downPressed && keyH.rightPressed) {
-
-            playerY += (playerSpeed / Math.sqrt(2));
-            playerX += (playerSpeed / Math.sqrt(2));
-        } else if (keyH.upPressed) {
-            playerY -= playerSpeed;
-        } else if (keyH.downPressed) {
-            playerY += playerSpeed;
-        } else if (keyH.leftPressed) {
-            playerX -= playerSpeed;
-        } else if (keyH.rightPressed) {
-            playerX += playerSpeed;
-        }
+        player.update();
     }
 
     // Standard method to draw in JPanel
@@ -105,8 +83,11 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.WHITE);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        player.draw(g2);
         g2.dispose();
+    }
+
+    public int getTileSize() {
+        return tileSize;
     }
 }
