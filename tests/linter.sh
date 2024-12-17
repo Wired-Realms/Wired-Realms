@@ -26,6 +26,13 @@ while IFS= read -r file; do
 
     fi
 
+    # Check for more than 100 characters in each line
+    if grep -Hn "^.\{100,\}$" "$file"; then
+        found_issue=true
+        echo "More than 100 characters in a line"
+
+    fi
+
     # Check for missing space between method declaration and {
     if grep -Hn "(*){" "$file"; then
         found_issue=true
