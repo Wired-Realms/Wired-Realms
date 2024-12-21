@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Objects;
 
 public class Player extends Entity{
@@ -53,7 +54,7 @@ public class Player extends Entity{
                     getResource("player/PlayerRight2.png")));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace((PrintWriter) PrintWriter.nullWriter());
         }
     }
 
