@@ -45,7 +45,6 @@ public class TileManager {
             int row = 0;
 
             while (col < 16 && row < 12) {
-                System.out.println("muie");
                 String line = br.readLine();
 
                 while (col < gp.getMaxScreenCol()) {
@@ -53,8 +52,6 @@ public class TileManager {
                     String[] numbers = line.split(" ");
 
                     int num = Integer.parseInt(numbers[col]);
-                    System.out.println(num);
-                    System.out.println("muie");
                     mapTileNum[col][row] = num;
                     col++;
                 }
