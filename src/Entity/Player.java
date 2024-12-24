@@ -68,23 +68,22 @@ public class Player extends Entity{
 
         if (keyH.leftPressed || keyH.rightPressed || keyH.upPressed || keyH.downPressed) {
 
-            double diagonalSpeed = speed / Math.sqrt(2);
             if (keyH.upPressed && keyH.leftPressed) {
                 direction = "left";
-                worldY -= diagonalSpeed;
-                worldX -= diagonalSpeed;
+                worldY -= 3;
+                worldX -= 3;
             } else if (keyH.upPressed && keyH.rightPressed) {
                 direction = "right";
-                worldY -= diagonalSpeed;
-                worldX += diagonalSpeed;
+                worldY -= 3;
+                worldX += 3;
             } else if (keyH.downPressed && keyH.leftPressed) {
                 direction = "left";
-                worldY += diagonalSpeed;
-                worldX -= diagonalSpeed;
+                worldY += 3;
+                worldX -= 3;
             } else if (keyH.downPressed && keyH.rightPressed) {
                 direction = "right";
-                worldY += diagonalSpeed;
-                worldX += diagonalSpeed;
+                worldY += 3;
+                worldX += 3;
             } else if (keyH.upPressed) {
                 direction = "up";
                 worldY -= speed;
