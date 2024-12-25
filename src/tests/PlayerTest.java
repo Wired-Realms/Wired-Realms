@@ -19,8 +19,8 @@ public class PlayerTest {
         keyH.upPressed = true;
         player.update();
         keyH.upPressed = false;
-        assertEquals(100, player.x);
-        assertEquals(96, player.y);
+        assertEquals(1104, player.worldX);
+        assertEquals(1004, player.worldY);
     }
 
     @Test
@@ -31,8 +31,8 @@ public class PlayerTest {
         keyH.downPressed = true;
         player.update();
         keyH.downPressed = false;
-        assertEquals(100, player.x);
-        assertEquals(104, player.y);
+        assertEquals(1104, player.worldX);
+        assertEquals(1012, player.worldY);
     }
 
     @Test
@@ -43,8 +43,8 @@ public class PlayerTest {
         keyH.leftPressed = true;
         player.update();
         keyH.leftPressed = false;
-        assertEquals(96, player.x);
-        assertEquals(100, player.y);
+        assertEquals(1100, player.worldX);
+        assertEquals(1008, player.worldY);
     }
 
     @Test
@@ -55,8 +55,8 @@ public class PlayerTest {
         keyH.rightPressed = true;
         player.update();
         keyH.rightPressed = false;
-        assertEquals(104, player.x);
-        assertEquals(100, player.y);
+        assertEquals(1108, player.worldX);
+        assertEquals(1008, player.worldY);
     }
 
     @Test
@@ -66,14 +66,17 @@ public class PlayerTest {
         // Test if the player moves up and left
         keyH.upPressed = true;
         keyH.leftPressed = true;
+
+        int newX = player.worldX - 3;
+        int newY = player.worldY - 3;
+
         player.update();
+
         keyH.upPressed = false;
         keyH.leftPressed = false;
-        double diagonalSpeed = player.speed / Math.sqrt(2);
-        double newX = 100 - diagonalSpeed;
-        double newY = 100 - diagonalSpeed;
-        assertEquals((int)newX, player.x);
-        assertEquals((int)newY, player.y);
+
+        assertEquals(newX, player.worldX);
+        assertEquals(newY, player.worldY);
     }
 
     @Test
@@ -83,14 +86,17 @@ public class PlayerTest {
         // Test if the player moves up and right
         keyH.upPressed = true;
         keyH.rightPressed = true;
+
+        int newX = player.worldX + 3;
+        int newY = player.worldY - 3;
+
         player.update();
+
         keyH.upPressed = false;
         keyH.rightPressed = false;
-        double diagonalSpeed = player.speed / Math.sqrt(2);
-        double newX = 100 + diagonalSpeed;
-        double newY = 100 - diagonalSpeed;
-        assertEquals((int)newX, player.x);
-        assertEquals((int)newY, player.y);
+
+        assertEquals(newX, player.worldX);
+        assertEquals(newY, player.worldY);
     }
 
     @Test
@@ -100,14 +106,17 @@ public class PlayerTest {
         // Test if the player moves down and left
         keyH.downPressed = true;
         keyH.leftPressed = true;
+
+        int newX = player.worldX - 3;
+        int newY = player.worldY + 3;
+
         player.update();
+
         keyH.downPressed = false;
         keyH.leftPressed = false;
-        double diagonalSpeed = player.speed / Math.sqrt(2);
-        double newX = 100 - diagonalSpeed;
-        double newY = 100 + diagonalSpeed;
-        assertEquals((int)newX, player.x);
-        assertEquals((int)newY, player.y);
+
+        assertEquals(newX, player.worldX);
+        assertEquals(newY, player.worldY);
     }
 
     @Test
@@ -117,13 +126,16 @@ public class PlayerTest {
         // Test if the player moves down and right
         keyH.downPressed = true;
         keyH.rightPressed = true;
+
+        int newX = player.worldX + 3;
+        int newY = player.worldY + 3;
+
         player.update();
+
         keyH.downPressed = false;
         keyH.rightPressed = false;
-        double diagonalSpeed = player.speed / Math.sqrt(2);
-        double newX = 100 + diagonalSpeed;
-        double newY = 100 + diagonalSpeed;
-        assertEquals((int)newX, player.x);
-        assertEquals((int)newY, player.y);
+
+        assertEquals(newX, player.worldX);
+        assertEquals(newY, player.worldY);
     }
 }
