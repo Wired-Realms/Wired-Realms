@@ -10,7 +10,7 @@ import java.util.Objects;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tiles;
+    public Tile[] tiles;
     int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
@@ -27,12 +27,16 @@ public class TileManager {
         try {
             tiles[0] = new Tile();
             tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Grass.png")));
+            tiles[0].filename = "Grass.png";
 
             tiles[1] = new Tile();
             tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Dirt.png")));
+            tiles[1].filename = "Dirt.png";
 
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence.png")));
+            tiles[2].filename = "Fence.png";
+
         } catch (IOException e) {
             e.printStackTrace((PrintWriter) PrintWriter.nullWriter());
         }
