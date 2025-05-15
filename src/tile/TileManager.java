@@ -11,7 +11,7 @@ public class TileManager {
 
     GamePanel gp;
     public Tile[] tiles;
-    int[][] mapTileNum;
+    public int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -34,8 +34,29 @@ public class TileManager {
             tiles[1].filename = "Dirt.png";
 
             tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence.png")));
-            tiles[2].filename = "Fence.png";
+            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence_Horizontal.png")));
+            tiles[2].filename = "Fence_Horizontal.png";
+            tiles[2].collision = true;
+
+            tiles[3] = new Tile();
+            tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence_Corner_Up_Left.png")));
+            tiles[3].filename = "Fence_Corner_Up_Left.png";
+            tiles[3].collision = true;
+
+            tiles[4] = new Tile();
+            tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence_Corner_Up_Right.png")));
+            tiles[4].filename = "Fence_Corner_Up_Right.png";
+            tiles[4].collision = true;
+
+            tiles[5] = new Tile();
+            tiles[5].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence_Corner_Down_Left.png")));
+            tiles[5].filename = "Fence_Corner_Down_Left.png";
+            tiles[5].collision = true;
+
+            tiles[6] = new Tile();
+            tiles[6].image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("tile/Fence_Corner_Down_Right.png")));
+            tiles[6].filename = "Fence_Corner_Down_Right.png";
+            tiles[6].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace((PrintWriter) PrintWriter.nullWriter());

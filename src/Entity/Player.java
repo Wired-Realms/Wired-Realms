@@ -25,6 +25,14 @@ public class Player extends Entity{
         screenX = gamePanel.getScreenWidth() / 2 - gamePanel.getTileSize() / 2;
         screenY = gamePanel.getScreenHeight() / 2 - gamePanel.getTileSize() / 2;
 
+        solidArea = new Rectangle();
+        // Start position of collision area
+        solidArea.x = 16;
+        solidArea.y = 24;
+        // Width and height of collision area
+        solidArea.width = 32;
+        solidArea.height = 28;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -69,33 +77,63 @@ public class Player extends Entity{
         if (keyH.leftPressed || keyH.rightPressed || keyH.upPressed || keyH.downPressed) {
 
             if (keyH.upPressed && keyH.leftPressed) {
-                direction = "left";
-                worldY -= 3;
-                worldX -= 3;
+                direction = "up_left";
             } else if (keyH.upPressed && keyH.rightPressed) {
-                direction = "right";
-                worldY -= 3;
-                worldX += 3;
+                direction = "up_right";
             } else if (keyH.downPressed && keyH.leftPressed) {
-                direction = "left";
-                worldY += 3;
-                worldX -= 3;
+                direction = "down_left";
             } else if (keyH.downPressed && keyH.rightPressed) {
-                direction = "right";
-                worldY += 3;
-                worldX += 3;
+                direction = "down_right";
             } else if (keyH.upPressed) {
                 direction = "up";
-                worldY -= speed;
             } else if (keyH.downPressed) {
                 direction = "down";
-                worldY += speed;
             } else if (keyH.leftPressed) {
                 direction = "left";
-                worldX -= speed;
             } else if (keyH.rightPressed) {
                 direction = "right";
-                worldX += speed;
+            }
+
+            // Check tile collision
+            collisionOn = false;
+            gamePanel.cChecker.CheckTile(this);
+
+            // Collision False => Move Player
+            if (collisionOn == false) {
+
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                    case "up_left":
+                        worldY -= 3;
+                        worldX -= 3;
+                        break;
+                    case "up_right":
+                        worldY -= 3;
+                        worldX += 3;
+                        break;
+                    case "down_left":
+                        worldY += 3;
+                        worldX -= 3;
+                        break;
+                    case "down_right":
+                        worldY += 3;
+                        worldX += 3;
+                        break;
+                    default:
+                        break;
+
+                }
             }
 
             spriteCounter++;
@@ -135,7 +173,7 @@ public class Player extends Entity{
                     image = up2;
                 }
                 break;
-            case "left":
+            case "left", "up_left", "down_left":
                 if (spriteNum == 1) {
                     image = left1;
                 }
@@ -143,7 +181,7 @@ public class Player extends Entity{
                     image = left2;
                 }
                 break;
-            case "right":
+            case "right", "up_right", "down_right":
                 if (spriteNum == 1) {
                     image = right1;
                 }
