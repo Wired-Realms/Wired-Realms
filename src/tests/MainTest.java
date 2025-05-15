@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 public class MainTest {
 
     PlayerTest playerTest = new PlayerTest();
-    testGetTileImage tileImageTest = new testGetTileImage();
+    TestGetTileImage tileImageTest = new TestGetTileImage();
 
     @Test
     public void testPlayer() {
