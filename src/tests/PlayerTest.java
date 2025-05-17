@@ -19,8 +19,8 @@ public class PlayerTest {
         keyH.upPressed = true;
         player.update();
         keyH.upPressed = false;
-        assertEquals(1104, player.worldX);
-        assertEquals(1004, player.worldY);
+        assertEquals(1472, player.worldX);
+        assertEquals(1340, player.worldY);
     }
 
     @Test
@@ -31,8 +31,8 @@ public class PlayerTest {
         keyH.downPressed = true;
         player.update();
         keyH.downPressed = false;
-        assertEquals(1104, player.worldX);
-        assertEquals(1012, player.worldY);
+        assertEquals(1472, player.worldX);
+        assertEquals(1348, player.worldY);
     }
 
     @Test
@@ -43,8 +43,8 @@ public class PlayerTest {
         keyH.leftPressed = true;
         player.update();
         keyH.leftPressed = false;
-        assertEquals(1100, player.worldX);
-        assertEquals(1008, player.worldY);
+        assertEquals(1468, player.worldX);
+        assertEquals(1344, player.worldY);
     }
 
     @Test
@@ -55,8 +55,8 @@ public class PlayerTest {
         keyH.rightPressed = true;
         player.update();
         keyH.rightPressed = false;
-        assertEquals(1108, player.worldX);
-        assertEquals(1008, player.worldY);
+        assertEquals(1476, player.worldX);
+        assertEquals(1344, player.worldY);
     }
 
     @Test
