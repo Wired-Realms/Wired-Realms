@@ -6,9 +6,11 @@ public class MainTest {
 
     PlayerTest playerTest = new PlayerTest();
     TestGetTileImage tileImageTest = new TestGetTileImage();
+    TestGetObject objectTest = new TestGetObject();
 
     @Test
     public void testPlayer() {
+        
         playerTest.testPlayerMoveUp();
         playerTest.testPlayerMoveDown();
         playerTest.testPlayerMoveLeft();
@@ -21,6 +23,14 @@ public class MainTest {
 
     @Test
     public void testTileImage() {
+
         tileImageTest.checkGetTileImage();
+    }
+
+    @Test
+    public void testObjectImage() {
+
+        objectTest.setUp();
+        objectTest.checkGetObjectImage();
     }
 }
