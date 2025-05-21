@@ -44,6 +44,7 @@ public class Player extends Entity{
         worldX = gamePanel.getTileSize() * 23;
         worldY = gamePanel.getTileSize() * 21;
         speed = 4;
+        diagonalSpeed = 3;
         direction = "none";
     }
 
@@ -118,20 +119,20 @@ public class Player extends Entity{
                         worldX += speed;
                         break;
                     case "up_left":
-                        worldY -= 3;
-                        worldX -= 3;
+                        worldY -= diagonalSpeed;
+                        worldX -= diagonalSpeed;
                         break;
                     case "up_right":
-                        worldY -= 3;
-                        worldX += 3;
+                        worldY -= diagonalSpeed;
+                        worldX += diagonalSpeed;
                         break;
                     case "down_left":
-                        worldY += 3;
-                        worldX -= 3;
+                        worldY += diagonalSpeed;
+                        worldX -= diagonalSpeed;
                         break;
                     case "down_right":
-                        worldY += 3;
-                        worldX += 3;
+                        worldY += diagonalSpeed;
+                        worldX += diagonalSpeed;
                         break;
                     default:
                         break;
