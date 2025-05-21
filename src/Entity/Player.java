@@ -26,12 +26,15 @@ public class Player extends Entity{
         screenY = gamePanel.getScreenHeight() / 2 - gamePanel.getTileSize() / 2;
 
         solidArea = new Rectangle();
-        // Start position of collision area
+        // Start position of collision area top left corner
         solidArea.x = 16;
         solidArea.y = 24;
         // Width and height of collision area
         solidArea.width = 32;
         solidArea.height = 28;
+        // 4 pixels from left and right
+        // 6 pixels from top
+        // 3 pixels from bottom
 
         setDefaultValues();
         getPlayerImage();
