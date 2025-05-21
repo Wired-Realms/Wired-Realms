@@ -7,6 +7,7 @@ public class MainTest {
     PlayerTest playerTest = new PlayerTest();
     TestGetTileImage tileImageTest = new TestGetTileImage();
     TestGetObject objectTest = new TestGetObject();
+    TestCollision collisionTest = new TestCollision();
 
     @Test
     public void testPlayer() {
@@ -32,5 +33,11 @@ public class MainTest {
 
         objectTest.setUp();
         objectTest.checkGetObjectImage();
+    }
+
+    @Test
+    public void testCollision() {
+        collisionTest.checkPlayerBox();
+        collisionTest.checkPlayerCollision();
     }
 }

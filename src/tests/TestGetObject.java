@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 public class TestGetObject {
 
     GamePanel gamePanel = new GamePanel();
+    int num_obj = 9; // MAY CHANGE
 
     @BeforeEach
     void setUp() {
@@ -18,7 +19,7 @@ public class TestGetObject {
     @Test
     void checkGetObjectImage() {
         // Check objects
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < num_obj; i++) {
             assert gamePanel.obj[i] != null : "Object " + i + " should not be null";
         }
 
