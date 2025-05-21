@@ -37,6 +37,8 @@ public class MainTest {
 
     @Test
     public void testCollision() {
+
+        collisionTest.setUp();
         collisionTest.checkPlayerBox();
         collisionTest.checkPlayerCollision();
     }

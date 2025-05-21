@@ -1,208 +1,101 @@
 package tests;
 
 import main.GamePanel;
-import main.KeyHandler;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCollision {
 
-    GamePanel gamePanel = new GamePanel();
+    private GamePanel gamePanel;
+
+    @BeforeEach
+    void setUp() {
+        gamePanel = new GamePanel();
+        // Default player configuration for every scenario
+        gamePanel.player.setDefaultValues();
+        gamePanel.player.speed = 16;
+        gamePanel.player.diagonalSpeed = 16;
+    }
 
     @Test
     void checkPlayerBox() {
-        assert gamePanel.player.solidArea.x == 16 : "Player solid area x should be 16";
-        assert gamePanel.player.solidArea.y == 24 : "Player solid area y should be 24";
-
-        assert gamePanel.player.solidArea.width == 32 : "Player solid area width should be 32";
-        assert gamePanel.player.solidArea.height == 28 : "Player solid area height should be 28";
+        assertAll("player solid area",
+                () -> assertEquals(16, gamePanel.player.solidArea.x),
+                () -> assertEquals(24, gamePanel.player.solidArea.y),
+                () -> assertEquals(32, gamePanel.player.solidArea.width),
+                () -> assertEquals(28, gamePanel.player.solidArea.height)
+        );
     }
 
     @Test
     void checkPlayerCollision() {
+        // cardinal
+        assertCollidesWhenMoving("left");
+        assertCollidesWhenMoving("right");
 
-        // Check left
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
+        reposition(22, 22); // altă zonă a hărții
+        assertCollidesWhenMoving("up");
+        assertCollidesWhenMoving("down");
 
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 21 : "Player worldY should be 1344";
+        // diagonale din poziţia iniţială
+        reposition(23, 21);
+        assertCollidesWhenMoving("up_left");
+        reposition(23, 21);
+        assertCollidesWhenMoving("up_right");
 
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
+        reposition(23, 22);
+        assertCollidesWhenMoving("down_left");
+        reposition(23, 22);
+        assertCollidesWhenMoving("down_right");
+    }
 
-        gamePanel.player.direction = "left";
-        gamePanel.keyH.leftPressed = true;
+    // Helper methods
+    private void assertCollidesWhenMoving(String direction) {
+        prepareKeys(direction, true);
+        gamePanel.player.direction = direction;
 
-        // Moves 16 pixels to the left
         gamePanel.player.update();
-
-        // Player should collide with a tile
         gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.leftPressed = false;
 
-        // Check Right
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
+        assertTrue(gamePanel.player.collisionOn, () -> "Expected collision when moving " + direction);
 
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 21 : "Player worldY should be 1344";
+        // reset pentru următoarea direcţie
+        prepareKeys(direction, false);
+        gamePanel.player.collisionOn = false;
+    }
 
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
+    private void prepareKeys(String direction, boolean pressed) {
+        switch (direction) {
+            case "left" -> gamePanel.keyH.leftPressed = pressed;
+            case "right" -> gamePanel.keyH.rightPressed = pressed;
+            case "up" -> gamePanel.keyH.upPressed = pressed;
+            case "down" -> gamePanel.keyH.downPressed = pressed;
+            case "up_left" -> {
+                gamePanel.keyH.upPressed = pressed;
+                gamePanel.keyH.leftPressed = pressed;
+            }
+            case "up_right" -> {
+                gamePanel.keyH.upPressed = pressed;
+                gamePanel.keyH.rightPressed = pressed;
+            }
+            case "down_left" -> {
+                gamePanel.keyH.downPressed = pressed;
+                gamePanel.keyH.leftPressed = pressed;
+            }
+            case "down_right" -> {
+                gamePanel.keyH.downPressed = pressed;
+                gamePanel.keyH.rightPressed = pressed;
+            }
+        }
+    }
 
-        gamePanel.player.direction = "right";
-        gamePanel.keyH.rightPressed = true;
-
-        // Moves 16 pixels to the right
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.rightPressed = false;
-
-        // Check Up
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
-        gamePanel.player.worldX = gamePanel.getTileSize() * 22;
-        gamePanel.player.worldY = gamePanel.getTileSize() * 22;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 22 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 22 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "up";
-        gamePanel.keyH.upPressed = true;
-
-        // Moves 16 pixels up
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.upPressed = false;
-
-        // Check Down
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
-        gamePanel.player.worldX = gamePanel.getTileSize() * 22;
-        gamePanel.player.worldY = gamePanel.getTileSize() * 22;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 22 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 22 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "down";
-        gamePanel.keyH.downPressed = true;
-
-        // Moves 16 pixels down
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.downPressed = false;
-
-        // Check Up Left
+    private void reposition(int tileX, int tileY) {
         gamePanel.player.setDefaultValues();
         gamePanel.player.speed = 16;
         gamePanel.player.diagonalSpeed = 16;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 21 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.diagonalSpeed == 16 : "Player diagonal speed should be 12";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "up_left";
-        gamePanel.keyH.upPressed = true;
-        gamePanel.keyH.leftPressed = true;
-
-        // Moves 16 pixels up and left
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.upPressed = false;
-        gamePanel.keyH.leftPressed = false;
-
-        // Check Up Right
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
-        gamePanel.player.diagonalSpeed = 16;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 21 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.diagonalSpeed == 16 : "Player diagonal speed should be 12";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "up_right";
-        gamePanel.keyH.upPressed = true;
-        gamePanel.keyH.rightPressed = true;
-
-        // Moves 16 pixels up and right
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.upPressed = false;
-        gamePanel.keyH.rightPressed = false;
-
-        // Check Down Left
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
-        gamePanel.player.diagonalSpeed = 16;
-
-        gamePanel.player.worldY = gamePanel.getTileSize() * 22;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 22 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.diagonalSpeed == 16 : "Player diagonal speed should be 12";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "down_left";
-        gamePanel.keyH.downPressed = true;
-        gamePanel.keyH.leftPressed = true;
-
-        // Moves 16 pixels down and left
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.downPressed = false;
-        gamePanel.keyH.leftPressed = false;
-
-        // Check Down Right
-        gamePanel.player.setDefaultValues();
-        gamePanel.player.speed = 16;
-        gamePanel.player.diagonalSpeed = 16;
-
-        gamePanel.player.worldY = gamePanel.getTileSize() * 22;
-
-        assert gamePanel.player.worldX == gamePanel.getTileSize() * 23 : "Player worldX should be 1472";
-        assert gamePanel.player.worldY == gamePanel.getTileSize() * 22 : "Player worldY should be 1344";
-
-        assert gamePanel.player.speed == 16 : "Player speed should be 16";
-        assert gamePanel.player.diagonalSpeed == 16 : "Player diagonal speed should be 12";
-        assert gamePanel.player.direction.equals("none") : "Player direction should be none";
-
-        gamePanel.player.direction = "down_right";
-        gamePanel.keyH.downPressed = true;
-        gamePanel.keyH.rightPressed = true;
-
-        // Moves 16 pixels down and right
-        gamePanel.player.update();
-        // Player should collide with a tile
-        gamePanel.cChecker.CheckTile(gamePanel.player);
-        assert gamePanel.player.collisionOn == true : "Player collisionOn should be true";
-        gamePanel.keyH.downPressed = false;
-        gamePanel.keyH.rightPressed = false;
+        gamePanel.player.worldX = gamePanel.getTileSize() * tileX;
+        gamePanel.player.worldY = gamePanel.getTileSize() * tileY;
     }
 }
