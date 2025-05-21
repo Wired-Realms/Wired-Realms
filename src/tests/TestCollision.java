@@ -33,13 +33,15 @@ public class TestCollision {
     void checkPlayerCollision() {
         // cardinal
         assertCollidesWhenMoving("left");
+        reposition(23, 21);
         assertCollidesWhenMoving("right");
 
-        reposition(22, 22); // altă zonă a hărții
+        reposition(22, 22);
         assertCollidesWhenMoving("up");
+        reposition(22, 22);
         assertCollidesWhenMoving("down");
 
-        // diagonale din poziţia iniţială
+        // Diagonal movement
         reposition(23, 21);
         assertCollidesWhenMoving("up_left");
         reposition(23, 21);

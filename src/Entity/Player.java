@@ -150,9 +150,6 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
-//        else if (!keyH.downPressed && !keyH.upPressed && !keyH.leftPressed && !keyH.rightPressed) {
-//            direction = "none";
-//        }
     }
 
     public void draw(Graphics2D g2) {
