@@ -172,6 +172,54 @@ public class CollisionChecker {
                             }
                         }
                         break;
+                    case "up_left":
+                        entity.solidArea.y -= entity.diagonalSpeed;
+                        entity.solidArea.x -= entity.diagonalSpeed;
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+                            if (gp.obj[i].collision) {
+                                entity.collisionOn = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "up_right":
+                        entity.solidArea.y -= entity.diagonalSpeed;
+                        entity.solidArea.x += entity.diagonalSpeed;
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+                            if (gp.obj[i].collision) {
+                                entity.collisionOn = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "down_left":
+                        entity.solidArea.y += entity.diagonalSpeed;
+                        entity.solidArea.x -= entity.diagonalSpeed;
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+                            if (gp.obj[i].collision) {
+                                entity.collisionOn = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "down_right":
+                        entity.solidArea.y += entity.diagonalSpeed;
+                        entity.solidArea.x += entity.diagonalSpeed;
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+                            if (gp.obj[i].collision) {
+                                entity.collisionOn = true;
+                            }
+                            if (player) {
+                                index = i;
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
