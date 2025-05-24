@@ -96,7 +96,7 @@ public class TestCollision {
     private void reposition(int tileX, int tileY) {
         gamePanel.player.setDefaultValues();
         gamePanel.player.speed = 16;
-        gamePanel.player.diagonalSpeed = 16;
+        gamePanel.player.diagonalSpeed = 12;
         gamePanel.player.worldX = gamePanel.getTileSize() * tileX;
         gamePanel.player.worldY = gamePanel.getTileSize() * tileY;
     }
