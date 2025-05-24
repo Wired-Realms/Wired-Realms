@@ -7,6 +7,7 @@ import java.util.Objects;
 public class ObjKey extends SuperObject{
 
     public ObjKey() {
+
         name = "Key";
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("objects/Key.png")));
