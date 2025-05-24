@@ -19,6 +19,7 @@ public class Player extends Entity{
     public final int screenY;
 
     int hasDoorKeys = 0; // Number of keys player has
+    int hasChestKeys = 0; // Number of keys player has for chests
 
     public Player(GamePanel gamePanel, KeyHandler keyH) {
         this.gamePanel = gamePanel;
@@ -185,6 +186,15 @@ public class Player extends Entity{
                     System.out.println("No keys to open the door!");
                 }
                 break;
+            case "Chest":
+                if (hasChestKeys > 0) {
+                    gamePanel.obj[index] = null; // Remove the object from the game
+                    hasChestKeys--;
+                    System.out.println("Opened a chest! Remaining keys: " + hasChestKeys);
+                } else {
+                    System.out.println("No keys to open the chest!");
+                }
+                    break;
             default:
                 System.out.println("Picked up: " + objName);
                 break;
