@@ -18,6 +18,8 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
+    int hasKeys = 0; // Number of keys player has
+
     public Player(GamePanel gamePanel, KeyHandler keyH) {
         this.gamePanel = gamePanel;
         this.keyH = keyH;
@@ -35,6 +37,9 @@ public class Player extends Entity{
         // 4 pixels from left and right
         // 6 pixels from top
         // 3 pixels from bottom
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -102,6 +107,9 @@ public class Player extends Entity{
             collisionOn = false;
             gamePanel.cChecker.CheckTile(this);
 
+            // Check object collision
+            int objIndex = gamePanel.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
             // Collision False => Move Player
             if (collisionOn == false) {
 
@@ -149,6 +157,34 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
+        }
+    }
+
+    public void pickUpObject(int index) {
+        // If player picks up an object
+        if (index == -1) {
+            return; // No object to pick up
+        }
+
+        String objName = gamePanel.obj[index].name;
+        switch (objName) {
+            case "Key":
+                hasKeys++;
+                gamePanel.obj[index] = null; // Remove the object from the game
+                System.out.println("Picked up a key! Total keys: " + hasKeys);
+                break;
+            case "Door":
+                if (hasKeys > 0) {
+                    gamePanel.obj[index] = null; // Remove the object from the game
+                    hasKeys--;
+                    System.out.println("Opened a door! Remaining keys: " + hasKeys);
+                } else {
+                    System.out.println("No keys to open the door!");
+                }
+                break;
+            default:
+                System.out.println("Picked up: " + objName);
+                break;
         }
     }
 
